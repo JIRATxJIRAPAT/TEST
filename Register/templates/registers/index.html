@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        #parent { white-space: nowrap; }
+        .child { display: inline-block; }   
+        h1{
+            color: rgb(218, 40, 218);
+            
+        }
+        p{
+            color: rgb(179, 65, 214);
+        }
+        b{
+            color: rgb(4, 1, 10);
+            margin-top: 1%;
+            margin-left: 2%;
+            font-size: 200%;
+            
+        }
+        
+        body,html{
+            background-image: url("/static/images/bg-pb.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        
+        br{
+            background-color: rgb(199, 231, 82);
+        }
+
+    </style>
+
+
+</head>
+
+
+
+<body>
+    <div class="alert alert-warning" role="alert">
+        &#128227 Enrollment Now 19 Sep - 28 Sep 2077 !
+    </div>
+
+    <p style="text-align: center;"><b> &#10084 &#128153 &#128154 Course List &#128155 &#129505 &#128156</b></p>
+    <br>   
+    <ul style="text-align: center;">
+    {% for x in Course  %}
+        <a href="{% url 'Register:ShowCourse' x.course_code %}" class="btn btn-light">{{ x }} </a>
+            
+        {% if x.status == True %}
+            <p style="text-shadow: 1px 2px 2px #FFCC00;;">Status :&#9989</p>
+            {% else %}
+            <p style="text-shadow: 1px 2px 2px #FFCC00;">Status : &#9940</p>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    
+
+</body>
+    
+    <a href="{% url 'Users:studentinfo' %}" class="btn btn-dark" style="margin-left: 1%;margin-bottom: 5px;" ><h5>&#9194 Return </h5></a>
+
+
+</html>
+

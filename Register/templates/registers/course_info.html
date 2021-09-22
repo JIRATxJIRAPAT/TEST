@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Register</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    
+        <style>
+            body,html{
+            background-image: url("/static/images/bg-pb.jpg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            }
+            dl,ul{
+                color:darkblue;
+                font-size: medium;
+                margin-left:10px;
+                
+            }
+            h2{
+                background-color: rgb(236, 184, 234);
+                margin-left:5px;
+            }
+
+            div.foo {
+                position: absolute;
+                top: 85%;
+                left: 1%;
+            }
+            div.a{
+                left: 1%;
+                margin-left: 15px;
+            }
+
+        </style>
+    
+    </head>
+    <body>
+        <h2> &#128214 Course: {{ Course.course_code }}</h2>
+        <br>
+        <dl>
+            <dd>Course Name: {{ Course.course_name }}</dd>
+            <dd>Open:{{Course.status}}</dd>
+            <dd>status: {{seat}}/{{Course.limit_seat}} seats</dd>
+        </dl>
+        
+        {% if request.user.is_superuser %}
+        <br>
+        <h2>&#128587 Students</h2>
+        <ul>
+            {% for y in student %}
+            <li>{{ y.first_name }} {{y.last_name}}</li>
+            {% empty %}
+            <li>No Student</li>
+            {% endfor %}
+        </ul>
+        
+        {% else %}
+        
+            <br>
+            <div class="a">
+                {% if request.user not in student %}
+                    {% if Course.status and seat < Course.limit_seat %}
+                    
+                        <p><a href="{% url 'Register:apply' Course.course_code %}"  class="btn btn-success">Apply course &#128221</a></h3>
+                    {% else %}
+                        {% if Course.status == False %}
+                            <p><h4 style="color:crimson;">Closed &#9203</a></h4>
+                        {% else %}
+                            <p><h4 style="color:crimson;">seat full &#128560</a></h4>
+                        {% endif %}        
+                    {% endif %}
+                {% else %}
+                
+                    <h4 style="color: rgba(64, 139, 41, 0.979);">Already Register</h4>
+                    <p><a href="{% url 'Register:remove' Course.course_code %}" class="btn btn-danger">&#9888 Remove course &#9888</a></h3>
+                
+                {% endif %}
+            {% endif %}
+            </div>
+        <div style="bottom: auto;" class="foo" >
+            <div class="btn-group-vertical">
+                <a href= "{% url 'Register:index'%}" class="btn btn-warning"> select course </a>
+                <a href= "{% url 'Users:studentinfo'%}" class="btn btn-secondary"> return to profile </a> 
+            </div>
+        </div>
+    </body>
+<html>
